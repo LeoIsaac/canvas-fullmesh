@@ -9,7 +9,7 @@ var Ball = function() {
   this.speed = 0.5;
 };
 var balls = [];
-var balls_num = 20;
+var balls_num = 0;
 
 //読み込み時に実行
 window.onload = function() {
@@ -21,6 +21,7 @@ window.onload = function() {
   }
   ctx = canvas.getContext('2d');
   getScreensize();
+  balls_num = (screenWidth * screenHeight) / 10000;
   for(var i = 0; i < balls_num; i++) {
     balls.push(new Ball());
   }
@@ -53,8 +54,8 @@ function draw() {
     for(var j = balls.length - 1; j > i; j--) {
       let n_ball = balls[j];
       let d = Math.sqrt(Math.pow(ball.x - n_ball.x, 2) + Math.pow(ball.y - n_ball.y, 2));
-      if(d < 500) {
-        ctx.lineWidth = 75 / (d * 2);
+      if(d < Math.min(screenWidth, screenHeight) / 2) {
+        ctx.lineWidth = balls_num / (d * 3);
         ctx.beginPath();
         ctx.moveTo(ball.x, ball.y);
         ctx.lineTo(n_ball.x, n_ball.y);
