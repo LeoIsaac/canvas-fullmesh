@@ -4,9 +4,12 @@ var canvas, ctx;
 var Ball = function() {
   this.x = getRandom(0, screenWidth);
   this.y = getRandom(0, screenHeight);
+  this.r = 5;
   this.a = getRandom(0, 360) * (2 * Math.PI / 360);
+  this.speed = 0.5;
 };
 var balls = [];
+var balls_num = 20;
 
 //読み込み時に実行
 window.onload = function() {
@@ -18,7 +21,7 @@ window.onload = function() {
   }
   ctx = canvas.getContext('2d');
   getScreensize();
-  for(var i = 0; i < 10; i++) {
+  for(var i = 0; i < balls_num; i++) {
     balls.push(new Ball());
   }
   window.requestAnimationFrame(draw);
@@ -37,10 +40,10 @@ function draw() {
   for(var i = 0; i < balls.length; i++) {
     let ball = balls[i];
     ctx.beginPath();
-    ctx.arc(ball.x, ball.y, 10, 0, Math.PI * 2, true);
+    ctx.arc(ball.x, ball.y, ball.r, 0, Math.PI * 2, true);
     ctx.fill();
-    ball.x += Math.cos(ball.a);
-    ball.y += Math.sin(ball.a);
+    ball.x += Math.cos(ball.a) * ball.speed;
+    ball.y += Math.sin(ball.a) * ball.speed;
     if(ball.x < 0 - 100) ball.x = screenWidth + 100;
     if(ball.y < 0 - 100) ball.y = screenHeight + 100;
     if(ball.x > screenWidth + 100) ball.x = 0 - 100;
